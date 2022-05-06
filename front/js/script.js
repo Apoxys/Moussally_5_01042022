@@ -1,10 +1,9 @@
 // Fetch les éléments dans l'API
 
-
 fetch ("http://localhost:3000/api/products")
 .then(function(promise){
     if (promise.ok){
-        return promise.json();
+        return promise.json();        
     }  
 })
 .then (function(promise){
@@ -16,27 +15,37 @@ fetch ("http://localhost:3000/api/products")
 
 
 // Insertion des éléments dans le DOM
+function fillingPresentation (){
+    // Base Structure
+    const insertElements = document.getElementById('items')
+    let link = document.createElement("a");
+    link.href="../html/product.html";
+    insertElements.appendChild(link);
+    
+    let article = document.createElement ("article");
+    link.appendChild(article);
+    
+    // img
+    let image = document.createElement("img");
+    image.src = "../../back/images/kanap01.jpeg";
+    article.appendChild(image);
+    
+    // h3 title
+    let title = document.createElement("h3");
+    title.classList.add ("productName");
+    title.innerHTML="Kanap Name";
+    article.appendChild(title);
+    
+    // p text
+    let text = document.createElement ("p");
+    text.classList.add("prodcutDescription");
+    text.innerHTML="Description";
+    article.appendChild(text);
+};
 
-// Base Structure
-const insertElements = document.getElementById('items') 
-let link = document.createElement("a");
-insertElements.appendChild(link);
+fillingPresentation();
 
-let article = document.createElement ("article");
-link.appendChild(article);
-
-// img
-let image = document.createElement("img");
-article.appendChild(image);
-// h3 title
-let title = document.createElement("h3");
-title.classList.add ("productName");
-article.appendChild(title);
-// p text
-let text = document.createElement ("p");
-text.classList.add("prodcutDescription");
-article.appendChild(text);
-
+console.log(JSON);
 
 // Elements à insérer à chaque itération
 /*<a href="./product.html?id=42">
