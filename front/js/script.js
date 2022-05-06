@@ -1,27 +1,41 @@
 // Fetch les éléments dans l'API
 
-// async function resAPI(){
-// let productList= fetch ("http://localhost:3000/api/products")
-// return (await productList).json;
-// }
-
 
 fetch ("http://localhost:3000/api/products")
 .then(function(promise){
     if (promise.ok){
         return promise.json();
-    }
+    }  
 })
 .then (function(promise){
     console.log (promise);
 })
 .catch (function(Error){
     console.log ("An error has occured");
-});
+})
+
 
 // Insertion des éléments dans le DOM
-const insertElement = document.getElementById('items');
 
+// Base Structure
+const insertElements = document.getElementById('items') 
+let link = document.createElement("a");
+insertElements.appendChild(link);
+
+let article = document.createElement ("article");
+link.appendChild(article);
+
+// img
+let image = document.createElement("img");
+article.appendChild(image);
+// h3 title
+let title = document.createElement("h3");
+title.classList.add ("productName");
+article.appendChild(title);
+// p text
+let text = document.createElement ("p");
+text.classList.add("prodcutDescription");
+article.appendChild(text);
 
 
 // Elements à insérer à chaque itération
