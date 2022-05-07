@@ -1,57 +1,48 @@
 // Fetch les éléments dans l'API
-
 fetch ("http://localhost:3000/api/products")
-.then(function(promise){
-    if (promise.ok){
-        return promise.json();        
-    }  
-})
-.then (function(promise){
-    console.log (promise);
+.then(function(response){
+    if (response.ok){
+        response.json()
+        .then(function(content){
+            fillingPresentation(content);
+        })
+    }
 })
 .catch (function(Error){
-    console.log ("An error has occured");
+    console.log ("An error has occured "+ Error);
 })
 
-
 // Insertion des éléments dans le DOM
-function fillingPresentation (){
-    // Base Structure
+function fillingPresentation (products){
+
+    for (let element of products){
+    // a
     const insertElements = document.getElementById('items')
     let link = document.createElement("a");
-    link.href="../html/product.html";
+    link.href="../html/product.html"+"?id="+element._id; /*not functionnal*/
     insertElements.appendChild(link);
+    console.log (element._id);
     
+    // article
     let article = document.createElement ("article");
     link.appendChild(article);
     
     // img
     let image = document.createElement("img");
-    image.src = "../../back/images/kanap01.jpeg";
+    image.src = element.imageUrl;
+    image.alt = element.altTxt;
     article.appendChild(image);
     
     // h3 title
     let title = document.createElement("h3");
     title.classList.add ("productName");
-    title.innerHTML="Kanap Name";
+    title.innerHTML=element.name;
     article.appendChild(title);
     
     // p text
     let text = document.createElement ("p");
     text.classList.add("prodcutDescription");
-    text.innerHTML="Description";
+    text.innerHTML=element.description;
     article.appendChild(text);
+    }
 };
-
-fillingPresentation();
-
-console.log(JSON);
-
-// Elements à insérer à chaque itération
-/*<a href="./product.html?id=42">
-            <article>
-              <img src=".../product01.jpg" alt="Lorem ipsum dolor sit amet, Kanap name1">
-              <h3 class="productName">Kanap name1</h3>
-              <p class="productDescription">Dis enim malesuada risus sapien gravida nulla nisl arcu. Dis enim malesuada risus sapien gravida nulla nisl arcu.</p>
-            </article>
-          </a>*/
