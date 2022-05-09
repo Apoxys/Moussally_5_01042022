@@ -1,42 +1,61 @@
-// (product) will be the fetch result
+// Define idOfProduct with current URL
+console.log(location);//checking location
+let urlparams = (new URL(location)).searchParams;
+let idOfProduct = urlparams.get('id');
+console.log(idOfProduct);//checking id
 
-// define <title>
-document
-    .getElementsByTagName("title")
-    .innerHTML = product.name
+// fetch for this product's JSON
+fetch ("http://localhost:3000/api/products/"+idOfProduct)
+.then(function(response){
+    if (response.ok){
+        response.json()
+        .then(function(content){           
+            console.log (content);//checking result
+            fillDom(content);
+            fillOptions(content);
+        })
+    }
+})
+.catch (function(Error){
+    console.log ("An error has occured : "+Error);
+});
+
 
 // filling DOM function
 function fillDom(product){
+// <title>
+let titleTagOfProduct = document.getElementsByTagName("title");
+    titleTagOfProduct.innerHTML = product.name;
+
 // img
-document
-    .getElementsByClassName("item__img")
-    .createElement("img")
-    .appendChild(img)
-    img.src = product.imageUrl
-    img.alt = product.altTxt
+let imgContainer = document.querySelector(".item__img");
+let imgOfProduct = document.createElement("img");
+imgContainer.appendChild(imgOfProduct);
+
+    imgOfProduct.src = product.imageUrl;
+    imgOfProduct.alt = product.altTxt;
 // h1 title
-    document
-        .getElementById("title")
-        .innerHTML = product.name
+    let h1OfProduct = document.getElementById("title");
+        h1OfProduct.innerHTML = product.name;
 // price
-    document
-        .getElementById("price")
-        .innerHTML = product.price
+    let priceOfProduct = document.getElementById("price");
+        priceOfProduct.innerHTML = product.price;
 // description
-    document
-        .getElementById("description")
-        .innerHTML = product.description
-};
+    let descriptionOfProduct = document.getElementById("description")
+        descriptionOfProduct.innerHTML = product.description
+
+};    
 
 function fillOptions(product){
     let selectTag = document.getElementById("colors")
-    let optionsTag = selectTag.nextElementSibling
 
-    for (let option of colors ){       
+    for (let option of colors){       
     document.createElement("option")
-    optionsTag.appendChild(option)
+    selectTag.appendChild(option)
     option.value = product.colors
     option.innerHTML = product.colors
 }
-}
+};
+
+
 

@@ -9,7 +9,7 @@ fetch ("http://localhost:3000/api/products")
     }
 })
 .catch (function(Error){
-    console.log ("An error has occured "+ Error);
+    console.log ("An error has occured : "+Error);
 })
 
 // Insertion des éléments dans le DOM
@@ -19,7 +19,7 @@ function fillingPresentation (products){
     // a
     const insertElements = document.getElementById('items')
     let link = document.createElement("a");
-    link.href="../html/product.html"+"?id="+element._id; /*not functionnal*/
+    link.href="../html/product.html?id="+element._id; /*not functionnal*/
     insertElements.appendChild(link);
     console.log (element._id);
     
@@ -41,7 +41,7 @@ function fillingPresentation (products){
     
     // p text
     let text = document.createElement ("p");
-    text.classList.add("prodcutDescription");
+    text.classList.add("productDescription");
     text.innerHTML=element.description;
     article.appendChild(text);
     }
