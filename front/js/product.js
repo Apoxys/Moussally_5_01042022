@@ -12,7 +12,7 @@ fetch ("http://localhost:3000/api/products/"+idOfProduct)
         .then(function(content){           
             console.log (content);//checking result
             fillDom(content);
-            fillOptions(content);
+            fillOptions(content.colors);
         })
     }
 })
@@ -24,13 +24,13 @@ fetch ("http://localhost:3000/api/products/"+idOfProduct)
 // filling DOM function
 function fillDom(product){
 // <title>
-let titleTagOfProduct = document.getElementsByTagName("title");
+    let titleTagOfProduct = document.getElementsByTagName("title")[0];
     titleTagOfProduct.innerHTML = product.name;
 
 // img
-let imgContainer = document.querySelector(".item__img");
-let imgOfProduct = document.createElement("img");
-imgContainer.appendChild(imgOfProduct);
+    let imgContainer = document.querySelector(".item__img");
+    let imgOfProduct = document.createElement("img");
+    imgContainer.appendChild(imgOfProduct);
 
     imgOfProduct.src = product.imageUrl;
     imgOfProduct.alt = product.altTxt;
@@ -46,14 +46,14 @@ imgContainer.appendChild(imgOfProduct);
 
 };    
 
-function fillOptions(product){
+function fillOptions(colors){
     let selectTag = document.getElementById("colors")
 
-    for (let option of colors){       
-    document.createElement("option")
+    for (let color of colors){       
+    let option = document.createElement("option") 
+    option.value = color
+    option.innerHTML = color
     selectTag.appendChild(option)
-    option.value = product.colors
-    option.innerHTML = product.colors
 }
 };
 
