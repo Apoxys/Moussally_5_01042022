@@ -21,7 +21,10 @@ fetch ("http://localhost:3000/api/products/"+idOfProduct)
 });
 
 
-// filling DOM function
+/**
+ * filling DOM function
+ * @param {*} product 
+ */
 function fillDom(product){
 // <title>
     let titleTagOfProduct = document.getElementsByTagName("title")[0];
@@ -46,15 +49,19 @@ function fillDom(product){
 
 };    
 
+/**
+ * Create an option for each color in [colors]
+ * @param {*} colors 
+ */
 function fillOptions(colors){
     let selectTag = document.getElementById("colors")
 
     for (let color of colors){       
-    let option = document.createElement("option") 
-    option.value = color
-    option.innerHTML = color
-    selectTag.appendChild(option)
-}
+        let option = document.createElement("option") 
+        option.value = color
+        option.innerHTML = color
+        selectTag.appendChild(option)
+    }
 };
 
 

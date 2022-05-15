@@ -12,11 +12,15 @@ fetch ("http://localhost:3000/api/products")
     console.log ("An error has occured : "+Error);
 })
 
-// Insertion des éléments dans le DOM
+/**
+ * Insertion des éléments dans le DOM
+ * @param {object} products
+ */
+
 function fillingPresentation (products){
 
     for (let element of products){
-    // a
+
     const insertElements = document.getElementById('items')
     insertElements.innerHTML += `<a href="product.html?id=${element._id}">
     <article>
