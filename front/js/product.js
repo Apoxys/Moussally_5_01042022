@@ -13,6 +13,7 @@ fetch ("http://localhost:3000/api/products/"+idOfProduct)
             console.log (content);//checking result
             fillDom(content);
             fillOptions(content.colors);
+            console.log (content.name)      
         })
     }
 })
@@ -20,11 +21,12 @@ fetch ("http://localhost:3000/api/products/"+idOfProduct)
     console.log ("An error has occured : "+Error);
 });
 
-
+// let titleTagOfProduct = document.getElementsByTagName("title")[0];
 /**
  * filling DOM function
  * @param {*} product 
  */
+
 function fillDom(product){
 // <title>
     let titleTagOfProduct = document.getElementsByTagName("title")[0];
