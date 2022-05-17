@@ -9,7 +9,7 @@ fetch("http://localhost:3000/api/products/" + idOfProduct)
     .then(function (response) {
         if (response.ok) {
             response.json()
-                .then(function(content) {
+                .then(function (content) {
                     console.log(content);//checking result
                     fillDom(content);
                     fillOptions(content.colors);
@@ -20,7 +20,7 @@ fetch("http://localhost:3000/api/products/" + idOfProduct)
                     const btnAddProduct = document.getElementById('addToCart');
 
                     // Btnclick listener to add to cart and update
-                    btnAddProduct.addEventListener("click", function(mouseEvent){
+                    btnAddProduct.addEventListener("click", function (mouseEvent) {
                         console.log(mouseEvent)
                         let chosenColor = selectTag.value
                         let chosenQuantity = inputQuantity.value
