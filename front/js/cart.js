@@ -5,12 +5,8 @@ let totalOfItems = 0
 let cartTotalPrice = 0
 
 for (const [id, colors] of Object.entries(productList)) {
-  console.log("iterationX" + id + colors)
 
   for (const [color, quantity] of Object.entries(colors)) {
-    // update total of items
-    console.log("iterationY" + color + quantity)
-    totalOfItems += quantity;
 
     // fetch based on each color for each id in localStorage
     fetch("http://localhost:3000/api/products/" + id)
@@ -19,9 +15,6 @@ for (const [id, colors] of Object.entries(productList)) {
           response.json()
             .then(function (product) {
               fillCartDOM(product)
-              cartTotalPrice += product.price * quantity;
-              console.log(cartTotalPrice)
-              cartTotalPriceTextZone.innerHTML = cartTotalPrice
             })
         }
       })
@@ -31,7 +24,8 @@ for (const [id, colors] of Object.entries(productList)) {
      * @param {Object} product
      */
     function fillCartDOM(product) {
-      // product-color currently printing NaN instead of currect color
+
+      // filling main HTML with each article
       const insertCartElements = document.getElementById("cart__items")
       insertCartElements.innerHTML += `<article class="cart__item" data-id="${product._id}" data-color="${color}">
                 <div class="cart__item__img">
@@ -55,20 +49,71 @@ for (const [id, colors] of Object.entries(productList)) {
                   </div>
                 </div>
               </article>`
+
+      // filling total items quantity and price
+      // Define elements to update for total items quantity and total price
+      const cartNumberOfElements = document.getElementById("totalQuantity")
+      const cartTotalPriceTextZone = document.getElementById("totalPrice")
+      // update of items and prices
+      totalOfItems += quantity;
+      cartTotalPrice += product.price * quantity;
+      cartNumberOfElements.innerHTML = totalOfItems
+      console.log(cartTotalPrice)
+      cartTotalPriceTextZone.innerHTML = cartTotalPrice
     }
   }
 }
 
 
 
-// remplir le total d'objets et le prix total de la commande
-// Define elements to update
-const cartNumberOfElements = document.getElementById("totalQuantity")
-cartNumberOfElements.innerHTML = totalOfItems
-const cartTotalPriceTextZone = document.getElementById("totalPrice")
-console.log("before inner html " + cartTotalPrice)
-
-
-
-// Formulaire d'envoi de commande
+// Order form
 // utiliser les RegEx pour vérifier que le formulaire est rempli correctement
+
+// Define form elements
+let firstName = document.getElementById("firstName")
+let lastName = document.getElementById("lastName")
+let city = document.getElementById("city")
+let adress = document.getElementById("adress")
+let email = document.getElementById("email")
+
+// Define RegExp for elements
+let namesRegExp = new RegExp("A-Za-z,.' -")
+let adressregExp = new RegExp("A-Za-z,.'0-9 -")
+let mailRegExp = new RegExp("a-z+@.a-z")
+
+function formCheck() {
+  firstName.addEventListener("change", function (event) {
+    // check correct RegExp usage with namesRegExp
+    //   if (RegExp.test not - true){
+    //   let errorMsgTextZone = document.getElementById("firstNameErrorMsg")
+    //   errorMsgTextZone.innerHTML = "Veuillez renseigner votre prénom"
+    //   return 0;
+    // }
+  })
+  lastName.addEventListener("change", function (event) {
+    // check correct RegExp usage with namesRegExp
+  })
+  city.addEventListener("change", function (event) {
+    // check correct RegExp usage with namesRegExp
+  })
+  adress.addEventListener("change", function (event) {
+    // check correct RegExp usage with adressRegExp
+  })
+  email.addEventListener("change", function (event) {
+    // check correct RegExp usage with mailRegExp
+  })
+}
+
+// Validate order
+let orderBtn = document.getElementById("order")
+
+orderBtn.addEventListener("click", function (event) {
+  const contact = {
+    firstName: "first name",
+    lastName: "last name",
+    adress: "adress",
+    city: "city",
+    email: "mail"
+  }
+
+})

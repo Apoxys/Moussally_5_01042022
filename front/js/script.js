@@ -31,3 +31,18 @@ function fillingPresentation (products){
    </a>`
     }
 };
+
+// // EMERGENCY DELETE
+// console.log (localStorage)
+// const insertElements = document.getElementById('items')
+// insertElements.innerHTML += `
+// <button id="delete">
+//   DELETE LOCAL STORAGE
+// </button>
+// `
+
+// let deleteBtn = document.getElementById("delete")
+// deleteBtn.addEventListener("click", function (event){
+//     storageAccess.clear()
+//     console.log (storageAccess)
+// })
