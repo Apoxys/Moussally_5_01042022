@@ -2,7 +2,7 @@
 console.log(location);//checking location
 let urlparams = (new URL(location)).searchParams;
 let idOfProduct = urlparams.get('id');
-console.log(idOfProduct);//checking id
+console.log(idOfProduct);
 console.log(getProductsFromLocalStorage())
 // fetch for this product's JSON
 fetch("http://localhost:3000/api/products/" + idOfProduct)
@@ -30,7 +30,7 @@ fetch("http://localhost:3000/api/products/" + idOfProduct)
                                 window.alert("Veuillez choisir une couleur")
                             } else {
                                 window.alert(`Vous avez choisi ${chosenQuantity} modèle(s) de notre ${content.name} dans sa teinte ${chosenColor}`)
-                                console.log("proceed") // code addtocart
+                                console.log("proceed")
                                 console.log(chosenQuantity)
                                 addToCart(idOfProduct, chosenColor, chosenQuantity)
                                 console.log(getProductsFromLocalStorage())

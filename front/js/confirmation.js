@@ -1,6 +1,7 @@
 // pre-construct
 // let confirmBtn = document.getElementById("confirm")
 // let orderId = id of order
+// URL param + orderId (same as product.html)
 
 function confirm() {
     let orderIdText = document.getElementById("orderId")
@@ -8,7 +9,3 @@ function confirm() {
     storageAccess.clear()
     console.log(localStorage)
 }
-
-// confirmBtn.addEventListener("click", function mouseEvent (){
-//     confirm()
-// })

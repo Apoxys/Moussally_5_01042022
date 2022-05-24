@@ -15,6 +15,8 @@ for (const [id, colors] of Object.entries(productList)) {
           response.json()
             .then(function (product) {
               fillCartDOM(product)
+              removeProduct()
+              changeQuantity()
             })
         }
       })
@@ -64,7 +66,39 @@ for (const [id, colors] of Object.entries(productList)) {
   }
 }
 
+// Remove product from cart
+function removeProduct() {
+  let removeBtn = document.getElementsByClassName("deleteItem")
+  console.log(removeBtn)
 
+  Object.values(removeBtn).forEach(element => {
+    element.addEventListener("click", function () {
+      let thisRemoveBtn = element.closest("article")
+      let elementId = thisRemoveBtn.getAttribute("data-id")
+      let elementColor = thisRemoveBtn.getAttribute("data-color")
+      removeElementFromLocalStorage(elementId, elementColor)
+    })
+  })
+}
+
+// Modify quantity in cart
+function changeQuantity() {
+  let modifyQuantity = document.getElementsByClassName("itemQuantity")
+  // console.log(modifyQuantity)
+
+  Object.values(modifyQuantity).forEach(element => {
+    element.addEventListener("change", function () {
+      let thisModifyQuantity = element.closest("article")
+      let elementId = thisModifyQuantity.getAttribute("data-id")
+      let elementColor = thisModifyQuantity.getAttribute("data-color")
+
+      let thisQuantityInput = element.closest("div > input")
+      let newQuantityInput = thisQuantityInput.value
+      console.log(newQuantityInput)
+      changeQuantityFromLocalStorage(elementId, elementColor, newQuantityInput)
+    })
+  })
+}
 
 // Order form
 // utiliser les RegEx pour vérifier que le formulaire est rempli correctement
@@ -73,47 +107,43 @@ for (const [id, colors] of Object.entries(productList)) {
 let firstName = document.getElementById("firstName")
 let lastName = document.getElementById("lastName")
 let city = document.getElementById("city")
-let adress = document.getElementById("adress")
+let address = document.getElementById("adress")
 let email = document.getElementById("email")
 
 // Define RegExp for elements
-let namesRegExp = new RegExp("A-Za-z,.' -")
-let adressregExp = new RegExp("A-Za-z,.'0-9 -")
-let mailRegExp = new RegExp("a-z+@.a-z")
+let namesRegExp = /^\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/g
+let addressregExp = /^[A-Za-z0-9]/g
+let mailRegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
 
-function formCheck() {
-  firstName.addEventListener("change", function (event) {
-    // check correct RegExp usage with namesRegExp
-    //   if (RegExp.test not - true){
-    //   let errorMsgTextZone = document.getElementById("firstNameErrorMsg")
-    //   errorMsgTextZone.innerHTML = "Veuillez renseigner votre prénom"
-    //   return 0;
-    // }
-  })
-  lastName.addEventListener("change", function (event) {
-    // check correct RegExp usage with namesRegExp
-  })
-  city.addEventListener("change", function (event) {
-    // check correct RegExp usage with namesRegExp
-  })
-  adress.addEventListener("change", function (event) {
-    // check correct RegExp usage with adressRegExp
-  })
-  email.addEventListener("change", function (event) {
-    // check correct RegExp usage with mailRegExp
-  })
-}
+
+
 
 // Validate order
 let orderBtn = document.getElementById("order")
 
 orderBtn.addEventListener("click", function (event) {
+  let firstNameErrorMsg = document.getElementById("firstNameErrorMsg")
+  let formChecker = true
+  if (firstName.value === "") {
+    firstName.style.border = "red 1px solid"
+    firstNameErrorMsg.innerHTML = "champ vide"
+    formChecker = false
+  } else if (firstName.value.length < 2) {
+    firstName.style.border = "red 1px solid"
+    firstNameErrorMsg.innerHTML = "Trop court"
+    formChecker = false
+  }
+  console.log(email.value.match(mailRegExp))
+  if (formChecker === false) {
+    event.preventDefault()
+  }
+
   const contact = {
-    firstName: "first name",
-    lastName: "last name",
-    adress: "adress",
-    city: "city",
-    email: "mail"
+    firstName: firstName,
+    lastName: lastName,
+    address: address,
+    city: city,
+    email: email
   }
 
 })
