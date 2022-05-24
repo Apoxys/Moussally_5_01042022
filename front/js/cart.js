@@ -69,7 +69,6 @@ for (const [id, colors] of Object.entries(productList)) {
 // Remove product from cart
 function removeProduct() {
   let removeBtn = document.getElementsByClassName("deleteItem")
-  console.log(removeBtn)
 
   Object.values(removeBtn).forEach(element => {
     element.addEventListener("click", function () {
@@ -84,7 +83,6 @@ function removeProduct() {
 // Modify quantity in cart
 function changeQuantity() {
   let modifyQuantity = document.getElementsByClassName("itemQuantity")
-  // console.log(modifyQuantity)
 
   Object.values(modifyQuantity).forEach(element => {
     element.addEventListener("change", function () {
@@ -106,8 +104,8 @@ function changeQuantity() {
 // Define form elements
 let firstName = document.getElementById("firstName")
 let lastName = document.getElementById("lastName")
+let address = document.getElementById("address")
 let city = document.getElementById("city")
-let address = document.getElementById("adress")
 let email = document.getElementById("email")
 
 // Define RegExp for elements
@@ -122,28 +120,119 @@ let mailRegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
 let orderBtn = document.getElementById("order")
 
 orderBtn.addEventListener("click", function (event) {
+  let formChecker = 0
+  // Checking first Name
   let firstNameErrorMsg = document.getElementById("firstNameErrorMsg")
-  let formChecker = true
   if (firstName.value === "") {
     firstName.style.border = "red 1px solid"
-    firstNameErrorMsg.innerHTML = "champ vide"
-    formChecker = false
-  } else if (firstName.value.length < 2) {
+    firstNameErrorMsg.innerHTML = "Champ vide"
+    // formChecker = false
+  } else if (firstName.value.length < 3) {
     firstName.style.border = "red 1px solid"
     firstNameErrorMsg.innerHTML = "Trop court"
-    formChecker = false
+    // formChecker = false
+  } else if (firstName.value.match(namesRegExp) === null) {
+    firstName.style.border = "red 1px solid"
+    firstNameErrorMsg.innerHTML = "Prénom incorrect"
+    // formChecker = false
+  } else {
+    formChecker++
+    firstName.style.border = ""
+    firstNameErrorMsg.innerHTML = ""
   }
-  console.log(email.value.match(mailRegExp))
-  if (formChecker === false) {
+
+  // Checking last Name 
+  let lastNameErrorMsg = document.getElementById("lastNameErrorMsg")
+  if (lastName.value === "") {
+    lastName.style.border = "red 1px solid"
+    lastNameErrorMsg.innerHTML = "Champ vide"
+    // formChecker = false
+  } else if (lastName.value.length < 3) {
+    lastName.style.border = "red 1px solid"
+    lastNameErrorMsg.innerHTML = "Trop court"
+    // formChecker = false
+  } else if (lastName.value.match(namesRegExp) === null) {
+    lastName.style.border = "red 1px solid"
+    lastNameErrorMsg.innerHTML = "Nom incorrect"
+    // formChecker = false
+  } else {
+    formChecker++
+    lastName.style.border = ""
+    lastNameErrorMsg.innerHTML = ""
+  }
+
+  // Checking address
+  let addressErrorMsg = document.getElementById("addressErrorMsg")
+  if (address.value === "") {
+    address.style.border = "red 1px solid"
+    addressErrorMsg.innerHTML = "Champ vide"
+    // formChecker = false
+  } else if (address.value.length < 3) {
+    address.style.border = "red 1px solid"
+    addressErrorMsg.innerHTML = "Trop court"
+    // formChecker = false
+  } else if (address.value.match(addressregExp) === null) {
+    address.style.border = "red 1px solid"
+    addressErrorMsg.innerHTML = "Adresse incorrecte"
+    // formChecker = false
+  } else {
+    formChecker++
+    address.style.border = ""
+    addressErrorMsg.innerHTML = ""
+  }
+
+  // Checking city
+  let cityErrorMsg = document.getElementById("cityErrorMsg")
+  if (city.value === "") {
+    city.style.border = "red 1px solid"
+    cityErrorMsg.innerHTML = "Champ vide"
+    // formChecker = false
+  } else if (city.value.length < 3) {
+    city.style.border = "red 1px solid"
+    cityErrorMsg.innerHTML = "Trop court"
+    // formChecker = false
+  } else if (city.value.match(namesRegExp) === null) {
+    city.style.border = "red 1px solid"
+    cityErrorMsg.innerHTML = "Nom de ville incorrect"
+    // formChecker = false
+  } else {
+    formChecker++
+    city.style.border = ""
+    cityErrorMsg.innerHTML = ""
+  }
+
+  // Checking email
+  let emailErrorMsg = document.getElementById("emailErrorMsg")
+  if (email.value === "") {
+    email.style.border = "red 1px solid"
+    emailErrorMsg.innerHTML = "Champ vide"
+    // formChecker = false
+  } else if (email.value.length < 3) {
+    email.style.border = "red 1px solid"
+    emailErrorMsg.innerHTML = "Trop court"
+    // formChecker = false
+  } else if (email.value.match(mailRegExp) === null) {
+    email.style.border = "red 1px solid"
+    emailErrorMsg.innerHTML = "Adresse mail incorrecte"
+    // formChecker = false
+  } else {
+    formChecker++
+    email.style.border = ""
+    emailErrorMsg.innerHTML = ""
+  }
+  console.log(formChecker)
+
+  if (formChecker != 5) {
     event.preventDefault()
-  }
+  } else {
 
-  const contact = {
-    firstName: firstName,
-    lastName: lastName,
-    address: address,
-    city: city,
-    email: email
+    const contact = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
+      city: city.value,
+      email: email.value
+    }
+    window.alert("Vous avez passé commande avec succès")
   }
-
 })
