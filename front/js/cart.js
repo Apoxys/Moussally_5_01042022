@@ -234,5 +234,7 @@ orderBtn.addEventListener("click", function (event) {
       email: email.value
     }
     window.alert("Vous avez passé commande avec succès")
+
+    sendOrder()
   }
 })

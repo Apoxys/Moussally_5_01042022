@@ -9,3 +9,5 @@ function confirm() {
     storageAccess.clear()
     console.log(localStorage)
 }
+
+confirm()
