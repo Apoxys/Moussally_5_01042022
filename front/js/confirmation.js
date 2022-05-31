@@ -1,8 +1,8 @@
-// pre-construct
-// let confirmBtn = document.getElementById("confirm")
-// let orderId = id of order
-// URL param + orderId (same as product.html)
+// Get orderId from URL
+let urlparams = (new URL(location)).searchParams;
+let orderId = urlparams.get('id');
 
+// Print orderId to client and clear localStorage
 function confirm() {
     let orderIdText = document.getElementById("orderId")
     orderIdText.innerHTML = `${orderId}.`

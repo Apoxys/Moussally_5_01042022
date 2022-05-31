@@ -20,6 +20,9 @@ for (const [id, colors] of Object.entries(productList)) {
             })
         }
       })
+      .catch((err)=>{
+        console.log(err)
+    })
 
     /**
      * Filling DOM function
@@ -57,9 +60,10 @@ for (const [id, colors] of Object.entries(productList)) {
       const cartNumberOfElements = document.getElementById("totalQuantity")
       const cartTotalPriceTextZone = document.getElementById("totalPrice")
       // update of items and prices
-      totalOfItems += quantity;
+      totalOfItems += parseInt(quantity);
+      console.log(totalOfItems)
       cartTotalPrice += product.price * quantity;
-      cartNumberOfElements.innerHTML = totalOfItems
+      cartNumberOfElements.innerHTML = parseInt(totalOfItems)
       console.log(cartTotalPrice)
       cartTotalPriceTextZone.innerHTML = cartTotalPrice
     }
@@ -120,17 +124,20 @@ let mailRegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
 let orderBtn = document.getElementById("order")
 
 orderBtn.addEventListener("click", function (event) {
+  event.preventDefault()
   let formChecker = 0
+
+  // Checking the form
   // Checking first Name
   let firstNameErrorMsg = document.getElementById("firstNameErrorMsg")
   if (firstName.value === "") {
     firstName.style.border = "red 1px solid"
     firstNameErrorMsg.innerHTML = "Champ vide"
-    // formChecker = false
+
   } else if (firstName.value.length < 3) {
     firstName.style.border = "red 1px solid"
     firstNameErrorMsg.innerHTML = "Trop court"
-    // formChecker = false
+    
   } else if (firstName.value.match(namesRegExp) === null) {
     firstName.style.border = "red 1px solid"
     firstNameErrorMsg.innerHTML = "Prénom incorrect"
@@ -224,6 +231,7 @@ orderBtn.addEventListener("click", function (event) {
 
   if (formChecker != 5) {
     event.preventDefault()
+    window.alert("Vérifiez le formulaire, une erreur a du s'y glisser !")
   } else {
 
     const contact = {
@@ -233,8 +241,12 @@ orderBtn.addEventListener("click", function (event) {
       city: city.value,
       email: email.value
     }
-    window.alert("Vous avez passé commande avec succès")
 
-    sendOrder()
+    const productsToBuy = []
+    for (let [id] of Object.entries(productList)) {
+      productsToBuy.push([id])
+    }
+    sendOrder(contact, productsToBuy)
   }
 })
+
