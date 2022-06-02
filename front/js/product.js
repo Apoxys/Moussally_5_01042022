@@ -1,18 +1,13 @@
-// Define idOfProduct with current URL
-console.log(location);//checking location
 let urlparams = (new URL(location)).searchParams;
 let idOfProduct = urlparams.get('id');
-console.log(idOfProduct);
-console.log(getProductsFromLocalStorage())
-// fetch for this product's JSON
-fetch("http://localhost:3000/api/products/" + idOfProduct)
+
+fetch("http://localhost:3000/api/products/" + idOfProduct) // fetch for this product's JSON
     .then(function (response) {
         if (response.ok) {
             response.json()
-                .then(function (content) {
-                    console.log(content);//checking result
-                    fillDom(content);
-                    fillOptions(content.colors);
+                .then(function (product) {
+                    fillDom(product);
+                    fillOptions(product.colors);
 
                     // Define listened tags
                     const selectTag = document.getElementById('colors')
@@ -20,20 +15,15 @@ fetch("http://localhost:3000/api/products/" + idOfProduct)
                     const btnAddProduct = document.getElementById('addToCart');
 
                     // Btnclick listener to add to cart and update
-                    btnAddProduct.addEventListener("click", function (mouseEvent) {
-                        console.log(mouseEvent)
+                    btnAddProduct.addEventListener("click", function () {
                         let chosenColor = selectTag.value
                         let chosenQuantity = inputQuantity.value
-                        console.log(`${chosenColor}  ${chosenQuantity}  ${content.name}`)
                         if (chosenQuantity >= 1 && chosenQuantity <= 100) {
                             if (chosenColor === "") {
                                 window.alert("Veuillez choisir une couleur")
                             } else {
-                                window.alert(`Vous avez choisi ${chosenQuantity} modèle(s) de notre ${content.name} dans sa teinte ${chosenColor}`)
-                                console.log("proceed")
-                                console.log(chosenQuantity)
+                                window.alert(`Vous avez choisi ${chosenQuantity} modèle(s) de notre ${product.name} dans sa teinte ${chosenColor}`)
                                 addToCart(idOfProduct, chosenColor, chosenQuantity)
-                                console.log(getProductsFromLocalStorage())
                             }
                         } else {
                             window.alert("Veuillez choisir une quantité valide")
@@ -48,9 +38,8 @@ fetch("http://localhost:3000/api/products/" + idOfProduct)
 
 /**
  * filling DOM function
- * @param {*} product 
+ * @param {object} product 
  */
-
 function fillDom(product) {
     // <title>
     let titleTagOfProduct = document.getElementsByTagName("title")[0];
@@ -77,7 +66,7 @@ function fillDom(product) {
 
 /**
  * Create an option for each color in [colors]
- * @param {*} colors 
+ * @param {string} colors 
  */
 function fillOptions(colors) {
     let selectTag = document.getElementById("colors")

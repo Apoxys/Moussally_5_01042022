@@ -1,4 +1,4 @@
-// Fetch les éléments dans l'API
+// GET available elements from API
 fetch ("http://localhost:3000/api/products")
 .then(function(response){
     if (response.ok){
@@ -13,7 +13,7 @@ fetch ("http://localhost:3000/api/products")
 })
 
 /**
- * Insertion des éléments dans le DOM
+ * Insert elements in DOM
  * @param {object} products
  */
 
@@ -31,18 +31,3 @@ function fillingPresentation (products){
    </a>`
     }
 };
-
-// // EMERGENCY DELETE
-// console.log (localStorage)
-// const insertElements = document.getElementById('items')
-// insertElements.innerHTML += `
-// <button id="delete">
-//   DELETE LOCAL STORAGE
-// </button>
-// `
-
-// let deleteBtn = document.getElementById("delete")
-// deleteBtn.addEventListener("click", function (event){
-//     storageAccess.clear()
-//     console.log (storageAccess)
-// })

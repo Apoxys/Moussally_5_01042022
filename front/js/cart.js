@@ -1,15 +1,14 @@
-// getlocalStorage
 const productList = getProductsFromLocalStorage()
 
 let totalOfItems = 0
 let cartTotalPrice = 0
 
+/**
+ * Loop through localStorage
+ */
 for (const [id, colors] of Object.entries(productList)) {
-
   for (const [color, quantity] of Object.entries(colors)) {
-
-    // fetch based on each color for each id in localStorage
-    fetch("http://localhost:3000/api/products/" + id)
+    fetch("http://localhost:3000/api/products/" + id) // fetch based on each color for each id in localStorage
       .then(function (response) {
         if (response.ok) {
           response.json()
@@ -56,7 +55,6 @@ for (const [id, colors] of Object.entries(productList)) {
               </article>`
 
       // filling total items quantity and price
-      // Define elements to update for total items quantity and total price
       const cartNumberOfElements = document.getElementById("totalQuantity")
       const cartTotalPriceTextZone = document.getElementById("totalPrice")
       // update of items and prices
@@ -70,7 +68,7 @@ for (const [id, colors] of Object.entries(productList)) {
   }
 }
 
-// Remove product from cart
+// Remove product from cart => see localStorage.js l53
 function removeProduct() {
   let removeBtn = document.getElementsByClassName("deleteItem")
 
@@ -84,7 +82,7 @@ function removeProduct() {
   })
 }
 
-// Modify quantity in cart
+// Modify quantity in cart => see localStorage.js l72
 function changeQuantity() {
   let modifyQuantity = document.getElementsByClassName("itemQuantity")
 
@@ -102,9 +100,8 @@ function changeQuantity() {
   })
 }
 
-// Order form
-// utiliser les RegEx pour vérifier que le formulaire est rempli correctement
 
+// ORDER FORM
 // Define form elements
 let firstName = document.getElementById("firstName")
 let lastName = document.getElementById("lastName")
@@ -116,9 +113,6 @@ let email = document.getElementById("email")
 let namesRegExp = /^\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/g
 let addressregExp = /^[A-Za-z0-9]/g
 let mailRegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
-
-
-
 
 // Validate order
 let orderBtn = document.getElementById("order")
@@ -133,15 +127,13 @@ orderBtn.addEventListener("click", function (event) {
   if (firstName.value === "") {
     firstName.style.border = "red 1px solid"
     firstNameErrorMsg.innerHTML = "Champ vide"
-
   } else if (firstName.value.length < 3) {
     firstName.style.border = "red 1px solid"
-    firstNameErrorMsg.innerHTML = "Trop court"
-    
+    firstNameErrorMsg.innerHTML = "Trop court" 
   } else if (firstName.value.match(namesRegExp) === null) {
     firstName.style.border = "red 1px solid"
     firstNameErrorMsg.innerHTML = "Prénom incorrect"
-    // formChecker = false
+
   } else {
     formChecker++
     firstName.style.border = ""
@@ -153,15 +145,13 @@ orderBtn.addEventListener("click", function (event) {
   if (lastName.value === "") {
     lastName.style.border = "red 1px solid"
     lastNameErrorMsg.innerHTML = "Champ vide"
-    // formChecker = false
   } else if (lastName.value.length < 3) {
     lastName.style.border = "red 1px solid"
     lastNameErrorMsg.innerHTML = "Trop court"
-    // formChecker = false
   } else if (lastName.value.match(namesRegExp) === null) {
     lastName.style.border = "red 1px solid"
     lastNameErrorMsg.innerHTML = "Nom incorrect"
-    // formChecker = false
+
   } else {
     formChecker++
     lastName.style.border = ""
@@ -173,15 +163,13 @@ orderBtn.addEventListener("click", function (event) {
   if (address.value === "") {
     address.style.border = "red 1px solid"
     addressErrorMsg.innerHTML = "Champ vide"
-    // formChecker = false
   } else if (address.value.length < 3) {
     address.style.border = "red 1px solid"
     addressErrorMsg.innerHTML = "Trop court"
-    // formChecker = false
   } else if (address.value.match(addressregExp) === null) {
     address.style.border = "red 1px solid"
     addressErrorMsg.innerHTML = "Adresse incorrecte"
-    // formChecker = false
+
   } else {
     formChecker++
     address.style.border = ""
@@ -193,15 +181,13 @@ orderBtn.addEventListener("click", function (event) {
   if (city.value === "") {
     city.style.border = "red 1px solid"
     cityErrorMsg.innerHTML = "Champ vide"
-    // formChecker = false
   } else if (city.value.length < 3) {
     city.style.border = "red 1px solid"
     cityErrorMsg.innerHTML = "Trop court"
-    // formChecker = false
   } else if (city.value.match(namesRegExp) === null) {
     city.style.border = "red 1px solid"
     cityErrorMsg.innerHTML = "Nom de ville incorrect"
-    // formChecker = false
+
   } else {
     formChecker++
     city.style.border = ""
@@ -213,22 +199,20 @@ orderBtn.addEventListener("click", function (event) {
   if (email.value === "") {
     email.style.border = "red 1px solid"
     emailErrorMsg.innerHTML = "Champ vide"
-    // formChecker = false
   } else if (email.value.length < 3) {
     email.style.border = "red 1px solid"
     emailErrorMsg.innerHTML = "Trop court"
-    // formChecker = false
   } else if (email.value.match(mailRegExp) === null) {
     email.style.border = "red 1px solid"
     emailErrorMsg.innerHTML = "Adresse mail incorrecte"
-    // formChecker = false
+
   } else {
     formChecker++
     email.style.border = ""
     emailErrorMsg.innerHTML = ""
   }
-  console.log(formChecker)
 
+  // overAll check and define objects to use in order
   if (formChecker != 5) {
     event.preventDefault()
     window.alert("Vérifiez le formulaire, une erreur a du s'y glisser !")
